@@ -1,0 +1,30 @@
+{
+  "name": "noclass",
+  "version": "0.2.4",
+  "description": "Remove class names from html files, usefull after inlining css for building mailers",
+  "main": "index.js",
+  "scripts": {
+    "test": "noclass"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iamallyniam/noclass.git"
+  },
+  "keywords": [
+    "remove",
+    "classes",
+    "mailers",
+    "html",
+    "css"
+  ],
+  "author": {
+    "name": "Allyn Thomas",
+    "email": "allyn@iamallyniam.com",
+    "url": "www.iamallyniam.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamallyniam/noclass/issues"
+  },
+  "homepage": "https://github.com/iamallyniam/noclass"
+}
