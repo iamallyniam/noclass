@@ -1,6 +1,6 @@
 {
   "name": "noclass",
-  "version": "0.2.5",
+  "version": "1.0.0",
   "description": "Remove class names from html files, usefull after inlining css for building mailers",
   "main": "index.js",
   "scripts": {
