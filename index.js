@@ -18,9 +18,8 @@ var classFromString = function(contents, proClasses){
     var regexp = /class="([a-zA-Z0-9_-\s]*)"/g;
     contents = contents.toString();
     var extract = contents.matchAll(regexp);
+    var classStrings = []; //object of all classes
     
-    var removeClasses = [];
-
     //match entire string for class names
     if(extract){
     
@@ -29,6 +28,12 @@ var classFromString = function(contents, proClasses){
             var fullString = extract[i][0];
             var classNames = extract[i][1];
             var classNamesArray = classNames.split(' ');
+            var safeClass = [];
+            //used to replace old string with new
+            var newClassObj = {
+                "old" : fullString,
+                "new" : 'class="'
+            };
             
             //check all classes as an array
             for(var ii= 0; ii < classNamesArray.length; ii++){
@@ -43,31 +48,36 @@ var classFromString = function(contents, proClasses){
                     
                     if(proClassesName == nameCheck){
                         
-                        canRemove = false;
+                        //if a protected class, it won't be removed
+                        safeClass.push(nameCheck);
                         break;
                         
                     }
                 }
-                
-                //if can remove, the class name is pushed into an array
-                if(canRemove){
-                    if(removeClasses.indexOf(nameCheck) == -1){
-                        removeClasses.push(nameCheck);
-                    }
+            }
+            
+            for(var ii = 0; ii < safeClass.length; ii++){
+                newClassObj.new += safeClass[ii];
+                if(ii < safeClass.length - 1){
+                    newClassObj.new += " ";
                 }
             }
+            
+            newClassObj.new += '"';
+            classStrings.push(newClassObj);
         }
     }
-    if(removeClasses.length > 0){
     
-        for(i = 0; i < removeClasses.length; i++){
-
-            var classToRemove = removeClasses[i];
-            var regex = new RegExp(classToRemove, 'g');
-            contents = contents.replace(regex, '');
-
+    for(var i = 0; i < classStrings.length; i++){
+        
+        var classObj = classStrings[i];
+        var replaceStr = classObj.new;
+        //don't add an empty class
+        if(replaceStr == 'class=""'){
+            replaceStr = '';
         }
-
+        contents = contents.replace(classObj.old, replaceStr);
+        
     }
         
     return contents;
