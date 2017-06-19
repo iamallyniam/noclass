@@ -21,6 +21,7 @@ var classFromString = function(contents, proClasses){
     
     var removeClasses = [];
 
+    //match entire string for class names
     if(extract){
     
         for(var i = 0; i < extract.length; i++){
@@ -28,12 +29,14 @@ var classFromString = function(contents, proClasses){
             var fullString = extract[i][0];
             var classNames = extract[i][1];
             var classNamesArray = classNames.split(' ');
-            var canRemove = true;
             
+            //check all classes as an array
             for(var ii= 0; ii < classNamesArray.length; ii++){
                 
                 var nameCheck = classNamesArray[ii];
+                var canRemove = true;
                 
+                //loop through protected class names, don't remove if matched
                 for(var iii = 0; iii < proClasses.length; iii++){
                     
                     var proClassesName = proClasses[iii];
@@ -41,14 +44,16 @@ var classFromString = function(contents, proClasses){
                     if(proClassesName == nameCheck){
                         
                         canRemove = false;
+                        break;
                         
                     }
                 }
-            }
-            
-            if(canRemove){
-                if(removeClasses.indexOf(fullString) == -1){
-                    removeClasses.push(fullString);
+                
+                //if can remove, the class name is pushed into an array
+                if(canRemove){
+                    if(removeClasses.indexOf(nameCheck) == -1){
+                        removeClasses.push(nameCheck);
+                    }
                 }
             }
         }
